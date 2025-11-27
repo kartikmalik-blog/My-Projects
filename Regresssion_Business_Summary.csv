@@ -1,0 +1,5 @@
+Metric,Value
+Model R2 Score (Goodness of Fit),0.4737
+Prediction Coefficient (MedInc),0.5447
+Prediction Coefficient (AveRooms),-0.2597
+Prediction Coefficient (Latitude),-0.0247
