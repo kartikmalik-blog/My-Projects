@@ -1,0 +1,5 @@
+Metric,Value
+MODEL PERFORMANCE R2 (Habitability),0.9050
+Dominant Feature 1,Planet_Mass
+Dominant Feature 2,H2O_Signature
+Model Accuracy (Classification),0.4867
