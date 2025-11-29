@@ -1,0 +1,36 @@
+Line,Code,Explanation,Skill
+"import pandas as pd, etc.",Imports,"Loads the necessary libraries: Pandas for data, NumPy for math, Matplotlib/Seaborn for visualization.",Data Setup
+
+np.random.seed(42),Seed,"Fixes the random number generator. This ensures your sales figures, averages, and plots are identical every time you run the script, which is crucial for reproducibility in a professional environment.",Reproducibility
+
+date_list = pd.to_datetime(...),Date List,Creates a repetitive list of dates (Jan 1st to Jan 7th) for 100 weeks.,Data Prep
+
+promo_list = np.random.randint(...),Promotion List,Creates a list of 0s and 1s to simulate whether a promotion was active on a given day.,Data Prep
+
+'Sales': np.random.randint(...) * (promo_list * 0.5)),Sales Calculation,"This is the formula that simulates real-world sales. The base sale amount is randomly generated, but it is then boosted by 50% (* 0.5) if a promotion is active (promo_list is 1).",Feature Engineering
+
+sales_df = pd.DataFrame(data),DataFrame Creation,Puts all the lists into a structured Pandas DataFrame (your virtual spreadsheet).,Data Framing
+
+sales_df['DayName'] = sales_df['Date'].dt.day_name(),Time Feature Engineering,"Extracts the actual name of the day ('Monday', 'Tuesday', etc.) from the 'Date' column. This is a critical step for time-series analysis.",Data Wrangling
+
+
+Line,Code,Explanation,Business Question Answered
+"day_performance = sales_df.groupby('DayName')['Sales'].agg(['mean', 'median', 'std']).reset_index()",Group By,"Groups all sales data by the name of the day, then calculates the mean (average), median (middle value), and standard deviation (data spread).","""What is our average sales performance by day?"""
+
+day_order = [...],Day Order,"Creates the list of days in the correct calendar order, which is necessary to ensure the plots and tables aren't sorted alphabetically.",Data Prep
+day_performance['DayName'] = pd.Categorical(...),Categorical Sort,Tells Pandas to use the custom day_order when sorting the data.,Data Ordering
+
+"promo_summary = sales_df.groupby('Promotion')['Sales'].agg(['mean', 'std']).reset_index()",Promotion Group By,Groups sales data by whether a promotion was active (0 or 1) and calculates the average and spread.,"""Did the promotion boost average sales?"""
+
+promo_summary['Promotion'] = promo_summary['Promotion'].replace(...),Labels,Replaces the numbers 0 and 1 with the human-readable labels 'No Promotion' and 'With Promotion'.,Readability
+
+Line,Code,Explanation,Chart/Insight
+"fig, axes = plt.subplots(1, 2, figsize=(16, 6))",Subplots,"Creates a single figure (the canvas) that contains two separate plots side-by-side (1 row, 2 columns).",Layout
+
+"sns.barplot(x='DayName', y='mean', ... ax=axes[0])",Plot A: Bar Plot,Creates a bar chart using the mean sales calculated in Task 2. Bar plots are excellent for comparing averages across different categories.,"""When are we busiest?"" (Visualization of mean sales)"
+
+axes[0].set_title(...),Titles and Labels,"Adds professional titles and labels, making the chart immediately understandable to any audience.",Communication
+
+"sns.boxplot(x='Promotion', y='Sales', ... ax=axes[1])",Plot B: Box Plot,"Creates a box plot. This is an advanced technique that shows the entire distribution of sales (median, spread, outliers), not just the mean.","""Does the Promotion work?"" (Visualization of sales variability)"
+
+plt.savefig('Sales_Analyst_Insights.png'),Save Chart,Saves the final figure as an image file. This is crucial for reports and presentations (PowerPoint/Excel).,Reporting
